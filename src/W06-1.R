@@ -44,9 +44,9 @@ for (i in 1:length(data_2014$ANIMALS)){
   linear_model <- lm(data_2014$ANIMALS_SQRT[-i] ~ data_2014$COVRG_SQRT[-i])
   intercept <- linear_model$coefficients[1]
   slope <- linear_model$coefficients[2]
-  animales_predicted <- slope*data_2014$COVRG_SQRT[i] + intercept #y=ax+b
-  animales_predicted <- animales_predicted^2
-  prediction_error[i] <- data_2014$ANIMALS[i] - animales_predicted
+  animals_predicted <- slope*data_2014$COVRG_SQRT[i] + intercept #y=ax+b
+  animals_predicted <- animals_predicted^2
+  prediction_error[i] <- data_2014$ANIMALS[i] - animals_predicted
   
 }
 
