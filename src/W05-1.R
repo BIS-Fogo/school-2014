@@ -35,7 +35,8 @@ setwd(working_directory)
 
 
 #### Read table ################################################################
-data_2014 <- read.csv("fieldSurvey2014_Subset01.csv")
+data_2014 <- read.table("fieldSurvey2014_Subset01.csv", sep = ",", dec = ".",
+                        header = "true")
 
 #look at distribution of the regression variables
 hist(data_2014$COVRG)

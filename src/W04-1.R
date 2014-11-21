@@ -36,7 +36,8 @@ setwd(working_directory)
 
 #### read table ################################################################
 
-data_2014 <- read.csv("fieldSurvey2014_Subset01.csv")
+data_2014 <- read.table("fieldSurvey2014_Subset01.csv", sep = ",", dec = ".",
+                        header = "true")
 
 
 #### Linear model Animals ~ Coverage  ##########################################
