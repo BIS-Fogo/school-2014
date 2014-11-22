@@ -46,7 +46,7 @@ print (spatial_data_2014)
 
 #### add a NDVI RasterLayer  ###################################################
 #read data
-ndvi <- raster("ndvi_fogo_qb.tif")
+ndvi <- raster("NDVI_fogo_landsat.tif")
 
 
 #### add a DEM RasterLayer  ###################################################
