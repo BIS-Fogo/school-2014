@@ -1,4 +1,4 @@
-#  Example solution of W09-1 from the BIS-Fogo school 2014
+#  Example solution of W10-1 from the BIS-Fogo school 2014
 #
 #  Copyright (C) 2014 Hanna Meyer, Alice Ziegler, Vanessa Wilzek, Thomas Nauss
 #
@@ -19,8 +19,7 @@
 #  reports to admin@environmentalinformatics-marburg.de
 # 
 #  Details:
-#  The script predicts the animal abundance for all field survey sites of the
-#  2014 survey.
+#  The script reads and plots spatial vector and raster data.
 #
 rm(list = ls(all = T))
 

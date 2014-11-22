@@ -1,4 +1,4 @@
-#  Example solution of W10-1 from the BIS-Fogo school 2014
+#  Example solution of W11-1 from the BIS-Fogo school 2014
 #
 #  Copyright (C) 2014 Hanna Meyer, Alice Ziegler, Vanessa Wilzek, Thomas Nauss
 #
@@ -19,8 +19,7 @@
 #  reports to admin@environmentalinformatics-marburg.de
 # 
 #  Details:
-#  The script predicts the animal abundance for all field survey sites of the
-#  2014 survey.
+#  The script predicts the area-wide animal abundance.
 #
 rm(list = ls(all = T))
 
@@ -38,7 +37,7 @@ setwd(working_directory)
 #### Read spatial data ########################################################
 
 spatial_data_2014 <- readOGR("data_2014_subset1.shp","data_2014_subset1")
-ndvi <- raster("ndvi_fogo.tif")
+ndvi <- raster("ndvi_fogo_qb.tif")
 dem <- raster("dem_fogo.tif")
 
 #### Extract raster values at points  ##########################################

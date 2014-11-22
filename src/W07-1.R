@@ -19,8 +19,7 @@
 #  reports to admin@environmentalinformatics-marburg.de
 # 
 #  Details:
-#  The script predicts the animal abundance for all field survey sites of the
-#  2014 survey.
+#  The script does some descripte statistics and related plots.
 #
 rm(list = ls(all = T))
 

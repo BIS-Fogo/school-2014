@@ -1,4 +1,4 @@
-#  Example solution of W11-1 from the BIS-Fogo school 2014
+#  Example solution of W8-1 from the BIS-Fogo school 2014
 #
 #  Copyright (C) 2014 Hanna Meyer, Alice Ziegler, Vanessa Wilzek, Thomas Nauss
 #
@@ -19,8 +19,8 @@
 #  reports to admin@environmentalinformatics-marburg.de
 # 
 #  Details:
-#  The script predicts the animal abundance for all field survey sites of the
-#  2014 survey.
+#  The script fits and predicts the animal abundance for all field survey sites of the
+#  2014 survey using a loess model.
 #
 rm(list = ls(all = T))
 
