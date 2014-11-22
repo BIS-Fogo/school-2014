@@ -62,7 +62,12 @@ qqPlot(linear_model)
 
 
 #### Predict Animals for each plot #############################################
-animals_predicted <- predict(linear_model,data.frame(data_2014$COVRG_SQRT))
+intercept <- linear_model$coefficients[1]
+slope <- linear_model$coefficients[2]
+animals_predicted <- slope * data_2014$COVRG_SQRT + intercept
+
+# alternative
+# animals_predicted <- predict(linear_model,data.frame(data_2014$COVRG_SQRT))
 
 
 #### Transform result back  ####################################################
