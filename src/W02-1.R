@@ -28,14 +28,17 @@ rm(list = ls(all = T))
 working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/procd/"
 setwd(working_directory)
 
+
 #### Read a table ################################################################
 data_2014 <- read.table("fieldSurvey2014_Subset01.csv", sep = ",", dec = ".",
-                        header = "true")
+                        header = TRUE)
+
 
 #### First look at the data ####################################################
 head(data_2014) #first entries
 str(data_2014) #structure of the data set
 names(data_2014) #column names
+
 
 #### Access to values from the table ###########################################
 ### first row:

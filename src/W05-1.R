@@ -36,7 +36,8 @@ setwd(working_directory)
 
 #### Read table ################################################################
 data_2014 <- read.table("fieldSurvey2014_Subset01.csv", sep = ",", dec = ".",
-                        header = "true")
+                        header = TRUE)
+
 
 #look at distribution of the regression variables
 hist(data_2014$COVRG)
@@ -52,7 +53,8 @@ data_2014$ANIMALS_SQRT <- sqrt(data_2014$ANIMALS)
 head(data_2014)
 
 plot(data_2014$COVRG_SQRT,data_2014$ANIMALS_SQRT)
-linear_model <- lm(data_2014$ANIMALS_SQRT~ data_2014$COVRG_SQRT)
+linear_model <- lm(data_2014$ANIMALS_SQRT~ data_2014$COVRG_SQRT,
+                   na.action = "na.omit")
 summary(linear_model)
 regLine(linear_model)
 
@@ -69,4 +71,3 @@ animals_predicted = animals_predicted ^2
 
 #### Plot results  #############################################################
 plot(data_2014$COVRG,animals_predicted)
-

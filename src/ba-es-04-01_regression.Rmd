@@ -1,0 +1,72 @@
+<!---
+Version: "2014-11-22"
+Copyright (C) 2014 Hanna Meyer, Thomas Nauss, GNU GPL (>=3)
+-->
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(sp)
+library(rgdal)
+library(car)
+
+setwd("D:/active/bis-fogo/data/")
+data_2007 <- readOGR("field-campaign_2007/IE_2007_pontos_esp.shp",
+                     "IE_2007_pontos_esp")
+
+#### Process data set ##########################################################
+#only data with correct height information
+data_2007 <- data_2007[data_2007$ALT_GPS_M>0,]
+
+#convert from factor to numeric
+data_2007$CYD_OBL <- as.numeric (data_2007$CYD_OBL)
+
+# calculate richness
+richness <- rowSums(data_2007@data[,14:89])
+
+# split into training and test data
+train_numbers <- sample(1:length(richness),length(richness)*0.75) #pick random 75% of data
+```
+
+##### Scatterplot
+To visualize the dependence between two variables, a scatterplot should be the 
+first choice.
+
+The following example illustrates the dependence between plant richness and
+elevation using the `plot()` function.
+```{r}
+plot(data_2007$ALT_GPS_M, richness,xlab="Altitude in m",ylab="Plant richness")
+```
+Although not a hard one, some kind of linear relationship can be observed with 
+decreasing plant richness with altitude.
+
+##### Linear model
+#### Computation
+To model the relationship between two linearily related variables, a simple 
+linear regression can be used.
+
+The following example illustrates the computation of a linear model between 
+plant richness and elevation.
+```{r}
+linear_model <- lm(richness ~ data_2007$ALT_GPS_M)
+print(linear_model)
+```
+The resulting model has an intercept of about 13.1 and a slope of about -0.01,
+i.e. decreasing plant richness with elevation. To visualize that, we can 
+add the regression line to the scatter plot using the `regline()` function (
+in addition we add the regression equation as a legend).
+```{r}
+plot(data_2007$ALT_GPS_M, richness,xlab="Altitude in m",ylab="Plant richness")
+regLine(linear_model)
+legend("topright",legend=paste0("y = ", round(linear_model$coefficients[2],3), 
+                                " * x + ",
+                                round(linear_model$coefficients[1],3)),bty="n")
+```
+
+#### Goodness of fit
+To estimate the goodness of fit of a linear model, one can have a look at the
+coefficient of determination along with the p-value.
+```{r}
+summary(linear_model)
+```
+One can see from the summary, that the model is highly significant with a p-value
+of much less than 0.01. Looking at an r squared of about 0.23, the model 
+explains about 23% of the variability of the data set, i.e. one can explain 23% 
+of the observed plant richness by the elevation of the observational plots.

@@ -1,0 +1,77 @@
+<!---
+Version: "2014-11-22"
+Copyright (C) 2014 Hanna Meyer, Thomas Nauss, GNU GPL (>=3)
+-->
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(sp)
+library(rgdal)
+library(car)
+
+setwd("D:/active/bis-fogo/data/")
+data_2007 <- readOGR("field-campaign_2007/IE_2007_pontos_esp.shp",
+                     "IE_2007_pontos_esp")
+
+#### Process data set ##########################################################
+#only data with correct height information
+data_2007 <- data_2007[data_2007$ALT_GPS_M>0,]
+
+#convert from factor to numeric
+data_2007$CYD_OBL <- as.numeric (data_2007$CYD_OBL)
+
+# calculate richness
+richness <- rowSums(data_2007@data[,14:89])
+
+# split into training and test data
+train_numbers <- sample(1:length(richness),length(richness)*0.75) #pick random 75% of data
+elevation_research_plots <- data_2007$ALT_GPS_M[-train_numbers]
+```
+##### Using linear models for prediction
+Once a linear regression model has been derived, it could be used for predicting
+values of the dependent variable at locations where only the independent variable
+is avialable (assuming that the model relationship is still valid at these
+locations).
+
+To illustrate this with the data set at hand, we artificially deleted some
+of the values of the plant richness and fitted the following linear model to
+the remaining value pairs of plant richness and elevation.
+```{r, echo=FALSE}
+#linear regression:
+linear_model <- lm(richness[train_numbers] ~ data_2007$ALT_GPS_M[train_numbers])
+plot(data_2007$ALT_GPS_M[train_numbers], richness[train_numbers],
+     xlab="Elevation in m",ylab="Plant richness")
+regLine(linear_model)
+summary(linear_model)
+```
+As one can see, this looks pretty much the same as in the last example where we
+derived the linear regression model using all available observations.
+
+However, if no further validation of the predicted values will be performed, the
+only estimate of the explanatory power is the r squared value of our linear
+regression (i.e. roughly 27% explanation). Therefore we have to make sure that
+at least the residuals of our linear model are normaly distributed:
+```{r}
+qqPlot(linear_model)
+```
+Obviously, that is the case (otherwise we could try to solve the problem by
+transforming the input variables).
+
+##### Computing predictions
+In order to predict the plant richness for some research plots where we do not
+have observational plant richness data available, we will apply the linear model
+equation to these elevation values. Hence, all we need is the intercept and
+slope value and there we go:
+```{r}
+intercept <- linear_model$coefficients[1]
+slope <- linear_model$coefficients[2]
+plant_richness_predicted <- slope*elevation_research_plots + intercept
+```
+To illustrate the result, we add the predicted plant richness to the scatter 
+plot:
+```{r}
+plot(data_2007$ALT_GPS_M[train_numbers], richness[train_numbers],
+     xlab="Elevation in m",ylab="Plant richness")
+regLine(linear_model)
+points(data_2007$ALT_GPS_M[-train_numbers],plant_richness_predicted,col="blue")
+```
+
+Unsurprisingly, they all fall on the regression line (i.e. the linear model).
