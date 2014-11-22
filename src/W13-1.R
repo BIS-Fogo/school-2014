@@ -59,24 +59,24 @@ plant_species_agr <- plant_species[,substring_plants=="AGR"]
 #### include ndvi as predictor variable ########################################
 
 ndvi <- raster(paste0(inpath,"NDVI_fogo_landsat.tif"))
-spatial_data_2014$ndvi_at_points <- extract(ndvi,spatial_data_2014)
+data_2014$ndvi <- extract(ndvi,spatial_data_2014)
 
 ### Do the ordination ##########################################################
 
 #for all plant species
-ordination <- cca(plant_species~ELEV+COVRG+ndvi_at_points,data=data_2014,na.action=na.omit)
+ordination <- cca(plant_species~ELEV+COVRG+ndvi,data=data_2014,na.action=na.omit)
 plot(ordination)
 anova(ordination,by="terms",permu=999)
 
 #for nat species
-ordination <- cca(plant_species_nat~ELEV+COVRG+ndvi_at_points,data=data_2014,
+ordination <- cca(plant_species_nat~ELEV+COVRG+ndvi,data=data_2014,
                   na.action=na.omit,
                   subset=which(rowSums(plant_species_nat)>0))
 plot(ordination)
 anova(ordination,by="terms",permu=999)
 
 #for agr species
-ordination <- cca(plant_species_agr~ELEV+COVRG+ndvi_at_points,data=data_2014,
+ordination <- cca(plant_species_agr~ELEV+COVRG+ndvi,data=data_2014,
                   na.action=na.omit,
                   subset=which(rowSums(plant_species_agr)>0))
 plot(ordination)
@@ -84,7 +84,7 @@ anova(ordination,by="terms",permu=999)
 
 
 #for all animals
-ordination <- cca(animal_species~ELEV+COVRG+ndvi_at_points,data=data_2014,
+ordination <- cca(animal_species~ELEV+COVRG+ndvi+NAT+AGR,data=data_2014,
                   na.action=na.omit,
                   subset=which(rowSums(animal_species)>0))
 plot(ordination)
