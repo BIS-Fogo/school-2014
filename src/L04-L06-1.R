@@ -42,7 +42,6 @@ library(car)
 
 
 #### Pre-process data set ######################################################
-
 data_2007 <- readOGR(paste0(inpath, "IE_2007_pontos_esp.shp"),
                      "IE_2007_pontos_esp")
 
@@ -54,6 +53,7 @@ data_2007$CYD_OBL <- as.numeric (data_2007$CYD_OBL)
 
 # calculate richness
 richness <- rowSums(data_2007@data[,14:89])
+
 
 #### Linear regression analysis ################################################
 # Save scatter plot, compute a linear regression analysis and save combined
