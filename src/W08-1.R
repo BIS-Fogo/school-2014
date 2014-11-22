@@ -24,37 +24,39 @@
 #
 rm(list = ls(all = T))
 
-#### Load required packages ####################################################
+#### Define Working directory ##################################################
+working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
+in_path <- paste0(working_directory,"data/procd/")
+out_path <- paste0(working_directory,"analysis/")
+script_path <- "D:/bis-fogo/school2014/scripts/"
+setwd(working_directory)
 
+
+#### Load required packages ####################################################
 library(rgdal)
 library(raster)
 
-#### Define Working directory ##################################################
-
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/procd/"
-script_directory <- "D:/bis-fogo/school2014/scripts/"
-setwd(working_directory)
 
 #### Read data ########################################################
+data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+                        sep = ",", dec = ".", header = TRUE)
 
-data_2014 <- read.csv("fieldSurvey2014_Subset01.csv")
 
 #### Plot Animals ~ coverage ###################################################
-
 plot(data_2014$COVRG,data_2014$ANIMALS)
 
-#### Do a loess model ##########################################################
 
+#### Do a loess model ##########################################################
 loess_model <- loess(data_2014$ANIMALS ~ data_2014$COVRG)
 
-#### Show prediction results ###################################################
 
+#### Show prediction results ###################################################
 x<-data_2014$COVRG
 predict.x<-min(x):max(x)
 lines(predict.x,predict(loess_model,newdata=predict.x),lwd=2,col="red")
 
-#### Do leave one out cross validation #########################################
 
+#### Do leave one out cross validation #########################################
 prediction_error_loess=c()
 for (i in 1:length(data_2014$ANIMALS)){
   loess_model <- loess(data_2014$ANIMALS[-i] ~ data_2014$COVRG[-i])
@@ -63,10 +65,11 @@ for (i in 1:length(data_2014$ANIMALS)){
   prediction_error_loess[i] <- data_2014$ANIMALS[i] - animals_predicted 
 }
 
+
 #### Calculate Mean prediction Error ###########################################
 mean(abs(prediction_error_loess),na.rm=T)
 
-#### Compare to prediction error from linear model #############################
-source(paste0(script_directory,"/W06-1.R"))
 
+#### Compare to prediction error from linear model #############################
+source(paste0(script_path,"/W06-1.R"))
 print (mean(abs(prediction_error),na.rm=T))

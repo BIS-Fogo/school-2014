@@ -23,30 +23,34 @@
 #
 rm(list = ls(all = T))
 
-#### Load required packages ####################################################
+#### Define Working directory ##################################################
+working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
+in_path <- paste0(working_directory,"data/procd/")
+out_path <- paste0(working_directory,"analysis/")
+setwd(working_directory)
 
+
+#### Load required packages ####################################################
 library(rgdal)
 library(plotKML)
 library(raster)
 
-#### Define Working directory ##################################################
-
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/procd/"
-setwd(working_directory)
 
 #### Read spatial data ########################################################
+spatial_data_2014 <- readOGR(paste0(inpath,
+                                    "data_2014_subset1.shp","data_2014_subset1"))
+ndvi <- raster(paste0(inpath,"ndvi_fogo_qb.tif"))
+dem <- raster(paste0(inpath,"dem_fogo.tif"))
 
-spatial_data_2014 <- readOGR("data_2014_subset1.shp","data_2014_subset1")
-ndvi <- raster("ndvi_fogo_qb.tif")
-dem <- raster("dem_fogo.tif")
 
 #### Extract raster values at points  ##########################################
 ndvi_at_points <- extract(ndvi,spatial_data_2014)
 dem_at_points <- extract(dem,spatial_data_2014)
 
-#### Plot relation NDVI~ ANIMALS  ##########################################
 
+#### Plot relation NDVI~ ANIMALS  ##########################################
 plot(spatial_data_2014$ANIMALS ~ ndvi_at_points)
+
 
 #### Do regression ANIMALS~NDVI+DEM  ##########################################
 linear_model <- lm(spatial_data_2014$ANIMALS ~ ndvi_at_points+ dem_at_points)
@@ -55,6 +59,7 @@ summary(linear_model)
 slope_ndvi=linear_model$coefficients[2]
 slope_dem=linear_model$coefficients[3]
 intercept=linear_model$coefficients[1]
+
 
 #### Predict on whole Raster  ##################################################
 #first:resample dem to same resolution as ndvi:

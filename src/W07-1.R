@@ -24,17 +24,20 @@
 rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/procd/"
-script_directory <- "D:/bis-fogo/school2014/scripts/"
+working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
+in_path <- paste0(working_directory,"data/procd/")
+out_path <- paste0(working_directory,"analysis/")
+script_path <- "D:/bis-fogo/school2014/scripts/"
 setwd(working_directory)
 
 
 #### Read table ################################################################
-data_2014 <- read.csv("fieldSurvey2014_Subset01.csv")
+data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+                        sep = ",", dec = ".", header = TRUE)
+
 
 #### Run linear model and prediction from W05-1 again ##########################
-
-source(paste0(script_directory,"/W05-1.R"))
+source(paste0(script_path,"/W05-1.R"))
 
 #### Descriptive statistics ####################################################
 mean(animals_predicted)
@@ -51,6 +54,7 @@ max(data_2014$ANIMALS,na.rm = TRUE)
 
 min(animals_predicted)
 min(data_2014$ANIMALS,na.rm = TRUE)
+
 
 #### Plots for descriptive statistics #########################################
 ### scatter plot:

@@ -23,49 +23,52 @@
 #
 rm(list = ls(all = T))
 
-#### Load required packages ####################################################
+#### Define Working directory ##################################################
+working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
+in_path <- paste0(working_directory,"data/procd/")
+out_path <- paste0(working_directory,"analysis/")
+setwd(working_directory)
 
+
+#### Load required packages ####################################################
 library(rgdal)
 library(raster)
 
-#### Define Working directory ##################################################
-
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/procd/"
-setwd(working_directory)
 
 #### Read the shapefile ########################################################
+spatial_data_2014 <- readOGR(paste0(inpath,
+                                    "data_2014_subset1.shp","data_2014_subset1"))
 
-spatial_data_2014 <- readOGR("data_2014_subset1.shp","data_2014_subset1")
 
 #### Get information of the shapefile  
-
 print (spatial_data_2014)
 
-#### add a NDVI RasterLayer  ###################################################
 
+#### add a NDVI RasterLayer  ###################################################
 #read data
 ndvi <- raster("NDVI_fogo.tif")
 
-#### add a DEM RasterLayer  ###################################################
 
+#### add a DEM RasterLayer  ###################################################
 #read data
 dem <- raster("dem_fogo.tif")
+
 
 #### Get information of the raster
 print (ndvi)
 print(dem)
 
-#### Plot spatial data  ########################################################
 
+#### Plot spatial data  ########################################################
 plot(ndvi)
 plot(spatial_data_2014,add =T)
+
 
 #zoom do extent of the points
 zoom(ndvi,ext=extent(spatial_data_2014))
 plot(spatial_data_2014,add =T)
 
-#### Plot data in google earth  ################################################
 
+#### Plot data in google earth  ################################################
 plotKML(spatial_data_2014["COVRG"])
 plotKML(ndvi)
-

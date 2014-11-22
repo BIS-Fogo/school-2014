@@ -24,16 +24,20 @@
 rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/procd/"
+working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
+in_path <- paste0(working_directory,"data/procd/")
+out_path <- paste0(working_directory,"analysis/")
 setwd(working_directory)
 
 
 #### Read table ################################################################
-data_2014 <- read.csv("fieldSurvey2014_Subset01.csv")
+data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+                        sep = ",", dec = ".", header = TRUE)
+
 
 #### Run linear model and prediction from W05-1 again ##########################
-
 source("/home/hanna/Documents/Projects/KapVerde/winterSchool/bis-fogo/analysis/W05-1.R")
+
 
 #### Modify plots ##############################################################
 ### scatter plot:
@@ -58,4 +62,3 @@ legend("topleft",pch=16,col="blue",legend="data points")
 
 ### add a diagonal line where oberved is equal predicted
 lines(c(0,200),c(0,200))
-

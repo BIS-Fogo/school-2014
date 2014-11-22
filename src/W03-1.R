@@ -23,20 +23,21 @@
 #
 rm(list = ls(all = T))
 
+#### Define Working directory ##################################################
+working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
+in_path <- paste0(working_directory,"data/procd/")
+out_path <- paste0(working_directory,"analysis/")
+setwd(working_directory)
+
 
 #### Load required libraries ###################################################
 library(car)      # needed for regression lines
 library(corrplot) # needed for a correlation plot
 
 
-#### Define Working directory ##################################################
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/procd/"
-setwd(working_directory)
-
-
 #### Read table ################################################################
-data_2014 <- read.table("fieldSurvey2014_Subset01.csv", sep = ",", dec = ".",
-                        header = TRUE)
+data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+                        sep = ",", dec = ".", header = TRUE)
 
 
 #### Investigate correlation between Animals and Coverage  #####################

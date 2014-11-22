@@ -28,8 +28,6 @@ rm(list = ls(all = T))
 print("Hello R")
 
 
-
-
 #### Use R as a calculator #####################################################
 1+5
 1*5
