@@ -36,17 +36,17 @@ library(corrplot) # needed for a correlation plot
 
 
 #### Read table ################################################################
-data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"), 
                         sep = ",", dec = ".", header = TRUE)
 
 
 #### Investigate correlation between Animals and Coverage  #####################
 plot(data_2014$COVRG,data_2014$ANIMALS)
-correlation <- cor.test(data_2014$ANIMAL,data_2014$COVRG)
+correlation <- cor(data_2014$ANIMAL,data_2014$COVRG, use =)
 print (correlation)
 
 
 #### Check for correlations between all variables ##############################
-correlations <- cor(data_2014,use="complete.obs")
+correlations <- cor(data_2014, use="complete.obs")
 corrplot(correlations,type="lower")
 

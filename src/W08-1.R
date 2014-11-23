@@ -38,7 +38,7 @@ library(raster)
 
 
 #### Read data ########################################################
-data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"), 
                         sep = ",", dec = ".", header = TRUE)
 
 

@@ -28,9 +28,9 @@ rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
 working_directory <- "D:/active/bis-fogo/"
-inpath <- paste0(working_directory, "data/field-campaign_2002/")
+in_path <- paste0(working_directory, "data/field-campaign_2002/")
 inrspath <- paste0(working_directory, "data/remote-sensing/misc/")
-outpath <- paste0(working_directory, "analysis/field-campaign_2002/")
+out_path <- paste0(working_directory, "analysis/field-campaign_2002/")
 analysis_id <- "fc2002"
 
 
@@ -44,7 +44,7 @@ library(car)
 
 
 #### Pre-process data set ######################################################
-data_2007 <- readOGR(paste0(inpath, "IE_2007_pontos_esp.shp"),
+data_2007 <- readOGR(paste0(in_path, "IE_2007_pontos_esp.shp"),
                      "IE_2007_pontos_esp")
 
 #only data with correct height information
@@ -68,14 +68,14 @@ dem_at_points <- extract(dem,data_2007)
 
 
 ####Plot relationships  ########################################################
-tiff(paste0(outpath, analysis_id, "prich_vs_NDVI.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_vs_NDVI.tiff"),
      compression = "lzw")
 plot(ndvi_at_points, richness,
      xlab="NDVI", ylab="Plant richness", 
      main = "Plant richness vs. NDVI")
 dev.off()
 
-tiff(paste0(outpath, analysis_id, "prich_vs_DEM.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_vs_DEM.tiff"),
      compression = "lzw")
 plot(dem_at_points, richness,
      xlab="Elevation from DEM in m", ylab="Plant richness", 
@@ -93,7 +93,7 @@ slope_dem=linear_model$coefficients[3]
 
 
 #### Predict on whole Raster  ##################################################
-tiff(paste0(outpath, analysis_id, "prich_predict_lm_NDVI_DEM.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_predict_lm_NDVI_DEM.tiff"),
      compression = "lzw")
 predicted_richness <- slope_ndvi*ndvi+slope_dem*dem+intercept
 plot(predicted_richness, 

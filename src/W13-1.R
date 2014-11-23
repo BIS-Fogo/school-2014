@@ -37,16 +37,16 @@ library(vegan)
 librar(raster)
 
 #### Read table ################################################################
-data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"), 
                         sep = ",", dec = ".", header = TRUE)
 
-animal_species <- read.table(paste0(inpath, "animal_species2014.csv"), 
+animal_species <- read.table(paste0(in_path, "animal_species2014.csv"), 
                         sep = ",", dec = ".", header = TRUE)
 
-plant_species <- read.table(paste0(inpath, "plant_species2014.csv"), 
+plant_species <- read.table(paste0(in_path, "plant_species2014.csv"), 
                                  sep = ",", dec = ".", header = TRUE)
 
-spatial_data_2014 <- readOGR(paste0(inpath,
+spatial_data_2014 <- readOGR(paste0(in_path,
                                     "data_2014_subset1.shp"),"data_2014_subset1")
 
 #### Do a subsetof the plant species ###########################################
@@ -58,7 +58,7 @@ plant_species_agr <- plant_species[,substring_plants=="AGR"]
 
 #### include ndvi as predictor variable ########################################
 
-ndvi <- raster(paste0(inpath,"NDVI_fogo_landsat.tif"))
+ndvi <- raster(paste0(in_path,"NDVI_fogo_landsat.tif"))
 data_2014$ndvi <- extract(ndvi,spatial_data_2014)
 
 ### Do the ordination ##########################################################

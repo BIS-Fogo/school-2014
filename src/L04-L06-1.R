@@ -28,8 +28,8 @@ rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
 working_directory <- "D:/active/bis-fogo/"
-inpath <- paste0(working_directory, "data/field-campaign_2002/")
-outpath <- paste0(working_directory, "analysis/field-campaign_2002/")
+in_path <- paste0(working_directory, "data/field-campaign_2002/")
+out_path <- paste0(working_directory, "analysis/field-campaign_2002/")
 analysis_id <- "fc2002"
 
 
@@ -42,7 +42,7 @@ library(car)
 
 
 #### Pre-process data set ######################################################
-data_2007 <- readOGR(paste0(inpath, "IE_2007_pontos_esp.shp"),
+data_2007 <- readOGR(paste0(in_path, "IE_2007_pontos_esp.shp"),
                      "IE_2007_pontos_esp")
 
 #only data with correct height information
@@ -58,7 +58,7 @@ richness <- rowSums(data_2007@data[,14:89])
 #### Linear regression analysis ################################################
 # Save scatter plot, compute a linear regression analysis and save combined
 # plot
-tiff(paste0(outpath, analysis_id, "prich_vs_elev.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_vs_elev.tiff"),
      compression = "lzw")
 plot(data_2007$ALT_GPS_M, richness,
      xlab="Elevation in m", ylab="Plant richness", 
@@ -70,12 +70,12 @@ print(linear_model)
 summary(linear_model)
 
 #plot distribution of residuals as a QQ-Plot
-tiff(paste0(outpath, analysis_id, "prich_vs_elev_lm_qq.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_vs_elev_lm_qq.tiff"),
      compression = "lzw")
 qqPlot(linear_model)
 dev.off()
 
-tiff(paste0(outpath, analysis_id, "prich_vs_elev_lm.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_vs_elev_lm.tiff"),
      compression = "lzw")
 plot(data_2007$ALT_GPS_M, richness,
      xlab="Elevation in m", ylab="Plant richness", 
@@ -99,7 +99,7 @@ slope <- linear_model$coefficients[2]
 animals_predicted <- slope*data_2007$ALT_GPS_M[-train_numbers] + intercept
 
 #plot predicted richness of test data
-tiff(paste0(outpath, analysis_id, "prich_vs_elev_lm_predict.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_vs_elev_lm_predict.tiff"),
      compression = "lzw")
 plot(data_2007$ALT_GPS_M, richness,
      xlab="Elevation in m", ylab="Plant richness", 
@@ -112,7 +112,7 @@ points(data_2007$ALT_GPS_M[-train_numbers],animals_predicted,col="blue")
 dev.off()
 
 #plot observed species richness of test data
-tiff(paste0(outpath, analysis_id, "prich_vs_elev_lm_predict_vs_obs.tiff"),
+tiff(paste0(out_path, analysis_id, "prich_vs_elev_lm_predict_vs_obs.tiff"),
      compression = "lzw")
 plot(data_2007$ALT_GPS_M, richness,
      xlab="Elevation in m", ylab="Plant richness", 

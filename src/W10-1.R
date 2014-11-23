@@ -36,7 +36,7 @@ library(raster)
 
 
 #### Read the shapefile ########################################################
-spatial_data_2014 <- readOGR(paste0(inpath,
+spatial_data_2014 <- readOGR(paste0(in_path,
                                     "data_2014_subset1.shp"),"data_2014_subset1")
 
 

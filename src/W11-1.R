@@ -37,10 +37,10 @@ library(raster)
 
 
 #### Read spatial data ########################################################
-spatial_data_2014 <- readOGR(paste0(inpath,
+spatial_data_2014 <- readOGR(paste0(in_path,
                                     "data_2014_subset1.shp"),"data_2014_subset1")
-ndvi <- raster(paste0(inpath,"NDVI_fogo_landsat.tif"))
-dem <- raster(paste0(inpath,"dem_fogo.tif"))
+ndvi <- raster(paste0(in_path,"NDVI_fogo_landsat.tif"))
+dem <- raster(paste0(in_path,"dem_fogo.tif"))
 
 
 #### Extract raster values at points  ##########################################

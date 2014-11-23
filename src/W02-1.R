@@ -31,7 +31,7 @@ setwd(working_directory)
 
 
 #### Read a table ################################################################
-data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"), 
+data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"), 
                         sep = ",", dec = ".", header = TRUE)
 
 
@@ -39,6 +39,7 @@ data_2014 <- read.table(paste0(inpath, "fieldSurvey2014_Subset01.csv"),
 head(data_2014) #first entries
 str(data_2014) #structure of the data set
 names(data_2014) #column names
+summary(data_2014) # statistical summary
 
 
 #### Access to values from the table ###########################################
@@ -54,3 +55,4 @@ data_2014[1:10,1]
 data_2014[,3]
 # which is the same as:
 data_2014$COVRG
+
