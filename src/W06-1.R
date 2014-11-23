@@ -31,6 +31,10 @@ out_path <- paste0(working_directory,"analysis/")
 setwd(working_directory)
 
 
+#### Load required libraries ###################################################
+library(car)      # needed for regression lines
+
+
 #### Read table ################################################################
 data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"), 
                         sep = ",", dec = ".", header = TRUE)
@@ -42,17 +46,21 @@ data_2014$ANIMALS_SQRT <- sqrt(data_2014$ANIMALS)
 
 
 #### Leave one out cross validation ############################################
-prediction_error=c()
+predicted_values <- c()
+observed_values <- c()
 for (i in 1:length(data_2014$ANIMALS)){
   linear_model <- lm(data_2014$ANIMALS_SQRT[-i] ~ data_2014$COVRG_SQRT[-i])
   intercept <- linear_model$coefficients[1]
   slope <- linear_model$coefficients[2]
   animals_predicted <- slope*data_2014$COVRG_SQRT[i] + intercept #y=ax+b
-  animals_predicted <- animals_predicted^2
-  prediction_error[i] <- data_2014$ANIMALS[i] - animals_predicted
-  
+  predicted_values[i] <- animals_predicted^2
+  observed_values[i] <- data_2014$ANIMALS[i]
 }
-
+prediction_error <- predicted_values - observed_values
 
 #### Calculate Mean prediction Error ###########################################
 mean(abs(prediction_error),na.rm=T)
+plot(observed_values, predicted_values)
+linear_model <- lm(predicted_values ~ observed_values)
+summary(linear_model)
+regLine(linear_model)

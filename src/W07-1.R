@@ -39,6 +39,7 @@ data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"),
 #### Run linear model and prediction from W05-1 again ##########################
 source(paste0(script_path,"/W05-1.R"))
 
+
 #### Descriptive statistics ####################################################
 mean(animals_predicted)
 mean(data_2014$ANIMALS,na.rm = TRUE)

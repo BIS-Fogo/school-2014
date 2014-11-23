@@ -19,8 +19,8 @@
 #  reports to admin@environmentalinformatics-marburg.de
 # 
 #  Details:
-#  The script fits and predicts the animal abundance for all field survey sites of the
-#  2014 survey using a loess model.
+#  The script fits and predicts the animal abundance for all field survey sites 
+#  of the 2014 survey using a loess model.
 #
 rm(list = ls(all = T))
 
