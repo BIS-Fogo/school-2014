@@ -25,8 +25,8 @@
 rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
-in_path <- paste0(working_directory,"data/procd/")
+working_directory <- "D:/active/bis-fogo/school2014/"
+in_path <- paste0(working_directory,"data/field-campaign_2014/procd/")
 out_path <- paste0(working_directory,"analysis/")
 setwd(working_directory)
 
@@ -56,11 +56,15 @@ for (i in 1:length(data_2014$ANIMALS)){
   predicted_values[i] <- animals_predicted^2
   observed_values[i] <- data_2014$ANIMALS[i]
 }
-prediction_error <- predicted_values - observed_values
+
 
 #### Calculate Mean prediction Error ###########################################
+prediction_error <- predicted_values - observed_values
 mean(abs(prediction_error),na.rm=T)
-plot(observed_values, predicted_values)
+
+
+#### Estimate R squared ########################################################
 linear_model <- lm(predicted_values ~ observed_values)
-summary(linear_model)
+print(summary(linear_model))
+plot(observed_values, predicted_values)
 regLine(linear_model)

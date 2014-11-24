@@ -24,8 +24,9 @@
 rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
-in_path <- paste0(working_directory,"data/procd/")
+working_directory <- "D:/active/bis-fogo/school2014/"
+in_path <- paste0(working_directory,"data/field-campaign_2014/procd/")
+raster_path <- paste0(working_directory,"data/remote-sensing/procd/")
 out_path <- paste0(working_directory,"analysis/")
 setwd(working_directory)
 
@@ -39,8 +40,8 @@ library(raster)
 #### Read spatial data ########################################################
 spatial_data_2014 <- readOGR(paste0(in_path,
                                     "data_2014_subset1.shp"),"data_2014_subset1")
-ndvi <- raster(paste0(in_path,"NDVI_fogo_landsat.tif"))
-dem <- raster(paste0(in_path,"dem_fogo.tif"))
+ndvi <- raster(paste0(raster_path, "NDVI_fogo_landsat.tif"))
+dem <- raster(paste0(raster_path, "dem_fogo.tif"))
 
 
 #### Extract raster values at points  ##########################################

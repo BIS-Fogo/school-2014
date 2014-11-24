@@ -25,10 +25,10 @@
 rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
-in_path <- paste0(working_directory,"data/procd/")
+working_directory <- "D:/active/bis-fogo/school2014/"
+in_path <- paste0(working_directory,"data/field-campaign_2014/procd/")
 out_path <- paste0(working_directory,"analysis/")
-script_path <- "D:/bis-fogo/school2014/scripts/"
+script_path <- paste0(working_directory, "scripts/school-2014/src")
 setwd(working_directory)
 
 
@@ -57,17 +57,26 @@ lines(predict.x,predict(loess_model,newdata=predict.x),lwd=2,col="red")
 
 
 #### Do leave one out cross validation #########################################
-prediction_error_loess=c()
+predicted_values <- c()
+observed_values <- c()
 for (i in 1:length(data_2014$ANIMALS)){
   loess_model <- loess(data_2014$ANIMALS[-i] ~ data_2014$COVRG[-i])
   predict.x <- data_2014$COVRG[i]
-  animals_predicted <- predict(loess_model,newdata=predict.x)
-  prediction_error_loess[i] <- data_2014$ANIMALS[i] - animals_predicted 
+  predicted_values[i] <- predict(loess_model,newdata=predict.x)
+  observed_values[i] <- data_2014$ANIMALS[i]
 }
 
 
 #### Calculate Mean prediction Error ###########################################
-mean(abs(prediction_error_loess),na.rm=T)
+prediction_error <- predicted_values - observed_values
+mean(abs(prediction_error),na.rm=T)
+
+
+#### Estimate R squared ########################################################
+linear_model <- lm(predicted_values ~ observed_values)
+print(summary(linear_model))
+plot(observed_values, predicted_values)
+regLine(linear_model)
 
 
 #### Compare to prediction error from linear model #############################

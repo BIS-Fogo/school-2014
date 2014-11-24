@@ -27,9 +27,10 @@ rm(list = ls(all = T))
 
 
 #### Define Working directory ##################################################
-working_directory <- "D:/active/bis-fogo/"
-in_path <- paste0(working_directory, "data/field-campaign_2002/")
-out_path <- paste0(working_directory, "analysis/field-campaign_2002/")
+working_directory <- "D:/active/bis-fogo/school2014/"
+in_path <- paste0(working_directory,"data/field-campaign_2002/procd/")
+raster_path <- paste0(working_directory,"data/remote-sensing/procd/")
+out_path <- paste0(working_directory,"analysis/")
 analysis_id <- "fc2002"
 
 
@@ -131,4 +132,3 @@ prediction_error <- richness[-train_numbers] - animals_predicted
 mean(abs(prediction_error),na.rm=T)
 
 
-#### Predict on artificially deselected points #################################

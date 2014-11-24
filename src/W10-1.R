@@ -24,8 +24,9 @@
 rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
-in_path <- paste0(working_directory,"data/procd/")
+working_directory <- "D:/active/bis-fogo/school2014/"
+in_path <- paste0(working_directory,"data/field-campaign_2014/procd/")
+raster_path <- paste0(working_directory,"data/remote-sensing/procd/")
 out_path <- paste0(working_directory,"analysis/")
 setwd(working_directory)
 
@@ -33,6 +34,7 @@ setwd(working_directory)
 #### Load required packages ####################################################
 library(rgdal)
 library(raster)
+library(plotKML)
 
 
 #### Read the shapefile ########################################################
@@ -46,12 +48,12 @@ print (spatial_data_2014)
 
 #### add a NDVI RasterLayer  ###################################################
 #read data
-ndvi <- raster("NDVI_fogo_landsat.tif")
+ndvi <- raster(paste0(raster_path, "NDVI_fogo_landsat.tif"))
 
 
 #### add a DEM RasterLayer  ###################################################
 #read data
-dem <- raster("dem_fogo.tif")
+dem <- raster(paste0(raster_path, "dem_fogo.tif"))
 
 
 #### Get information of the raster
@@ -70,5 +72,8 @@ plot(spatial_data_2014,add =T)
 
 
 #### Plot data in google earth  ################################################
-plotKML(spatial_data_2014["COVRG"])
-plotKML(ndvi)
+plotKML(spatial_data_2014["COVRG"], 
+        folder.name = out_path, file.name = "COVRG.kml")
+plotKML(ndvi,
+        folder.name = out_path, file.name = "NDVI.kml")
+

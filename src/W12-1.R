@@ -25,10 +25,10 @@ rm(list = ls(all = T))
 
 #### Define Working directory ##################################################
 
-working_directory <- "D:/bis-fogo/school2014/data/field-campaign_2014/"
-in_path <- paste0(working_directory,"data/procd/")
+working_directory <- "D:/active/bis-fogo/school2014/"
+in_path <- paste0(working_directory,"data/field-campaign_2014/procd/")
 out_path <- paste0(working_directory,"analysis/")
-script_path <- "D:/bis-fogo/school2014/scripts/"
+script_path <- paste0(working_directory, "scripts/school-2014/src")
 setwd(working_directory)
 
 #### Read table ################################################################

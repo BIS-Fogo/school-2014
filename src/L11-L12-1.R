@@ -27,10 +27,10 @@ rm(list = ls(all = T))
 
 
 #### Define Working directory ##################################################
-working_directory <- "D:/active/bis-fogo/"
-in_path <- paste0(working_directory, "data/field-campaign_2002/")
-inrspath <- paste0(working_directory, "data/remote-sensing/misc/")
-out_path <- paste0(working_directory, "analysis/field-campaign_2002/")
+working_directory <- "D:/active/bis-fogo/school2014/"
+in_path <- paste0(working_directory,"data/field-campaign_2002/procd/")
+raster_path <- paste0(working_directory,"data/remote-sensing/procd/")
+out_path <- paste0(working_directory,"analysis/")
 analysis_id <- "fc2002"
 
 
@@ -57,8 +57,8 @@ data_2007$CYD_OBL <- as.numeric (data_2007$CYD_OBL)
 richness <- rowSums(data_2007@data[,14:89])
 
 # Load NDVI and DEM and resample DEM to NDVI resolution
-ndvi <- raster(paste0(inrspath, "NDVI_fogo_landsat.tif"))
-dem <- raster(paste0(inrspath, "dem_fogo.tif"))
+ndvi <- raster(paste0(raster_path, "NDVI_fogo_landsat.tif"))
+dem <- raster(paste0(raster_path, "dem_fogo.tif"))
 dem <- resample(dem,ndvi)
 
 
