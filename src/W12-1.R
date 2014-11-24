@@ -42,6 +42,9 @@ data_2014[data_2014$COVRG>50,]
 #### Rows with more natural species than agrar species ##############
 data_2014[data_2014$NAT>data_2014$AGR,]
 
+#### Rows with exactly 3 natural species or 3 agrar species ##############
+data_2014[data_2014$NAT==3|data_2014$AGR==3,]
+
 #### Rows with COVRG smaller than 5 and Elevation under 1800m##############
 data_2014[data_2014$NAT>data_2014$AGR & data_2014$ELEV<1800,]
 
