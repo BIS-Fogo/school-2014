@@ -72,8 +72,7 @@ plot(spatial_data_2014,add =T)
 
 
 #### Plot data in google earth  ################################################
-plotKML(spatial_data_2014["COVRG"], 
-        folder.name = out_path, file.name = "COVRG.kml")
-plotKML(ndvi,
-        folder.name = out_path, file.name = "NDVI.kml")
+setwd(out_path)
+plotKML(spatial_data_2014["COVRG"])
+plotKML(ndvi)
 

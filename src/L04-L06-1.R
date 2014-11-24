@@ -131,4 +131,22 @@ dev.off()
 prediction_error <- richness[-train_numbers] - animals_predicted
 mean(abs(prediction_error),na.rm=T)
 
+linear_model <- lm(animals_predicted ~ richness[-train_numbers])
+print(summary(linear_model))
+plot(richness[-train_numbers], animals_predicted)
+regLine(linear_model)
 
+
+#### Local regression analysis #################################################
+
+loess_model <- loess(richness ~ data_2007$ALT_GPS_M)
+x<-data_2007$ALT_GPS_M
+predict.x<-min(x):max(x)
+
+tiff(paste0(out_path, analysis_id, "prich_vs_elev_loess.tiff"),
+     compression = "lzw")
+plot(data_2007$ALT_GPS_M, richness,
+     xlab="Elevation in m", ylab="Plant richness", 
+     main = "Plant richness vs. Elevation")
+lines(predict.x,predict(loess_model,newdata=predict.x),lwd=2,col="red")
+dev.off()

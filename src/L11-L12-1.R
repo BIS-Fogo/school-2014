@@ -37,6 +37,7 @@ analysis_id <- "fc2002"
 #### Set working direcory and load required libraries ##########################
 setwd(working_directory)
 analysis_id <- paste0(analysis_id, "_")
+library(car)
 library(sp)
 library(raster)
 library(rgdal)
@@ -61,6 +62,20 @@ ndvi <- raster(paste0(raster_path, "NDVI_fogo_landsat.tif"))
 dem <- raster(paste0(raster_path, "dem_fogo.tif"))
 dem <- resample(dem,ndvi)
 
+tiff(paste0(out_path, analysis_id, "DEM_and_survey_plots.tiff"),
+     compression = "lzw")
+plot(dem, main = "DEM with locations of survey plots")
+plot(data_2007,add =T)
+dev.off()
+
+tiff(paste0(out_path, analysis_id, "DEM_and_survey_plots_zoom.tiff"),
+     compression = "lzw")
+# e <- extent(data_2007)
+e <- extent(120000, 121000, 27300, 28000)
+zoom(dem,ext=e, main = "Zoom into DEM with locations of survey plots")
+plot(data_2007,add =T)
+dev.off()
+
 
 #### Extract raster values at points  ##########################################
 ndvi_at_points <- extract(ndvi,data_2007)
@@ -68,18 +83,23 @@ dem_at_points <- extract(dem,data_2007)
 
 
 ####Plot relationships  ########################################################
+linear_model <- lm(richness ~ ndvi_at_points)
 tiff(paste0(out_path, analysis_id, "prich_vs_NDVI.tiff"),
      compression = "lzw")
 plot(ndvi_at_points, richness,
      xlab="NDVI", ylab="Plant richness", 
      main = "Plant richness vs. NDVI")
+regLine(linear_model)
 dev.off()
 
+
+linear_model <- lm(richness ~ dem_at_points)
 tiff(paste0(out_path, analysis_id, "prich_vs_DEM.tiff"),
      compression = "lzw")
 plot(dem_at_points, richness,
      xlab="Elevation from DEM in m", ylab="Plant richness", 
      main = "Plant richness vs. DEM elevation")
+regLine(linear_model)
 dev.off()
 
 
