@@ -32,11 +32,6 @@ script_path <- paste0(working_directory, "scripts/school-2014/src")
 setwd(working_directory)
 
 
-#### Load required packages ####################################################
-library(rgdal)
-library(raster)
-
-
 #### Read data ########################################################
 data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"), 
                         sep = ",", dec = ".", header = TRUE)
