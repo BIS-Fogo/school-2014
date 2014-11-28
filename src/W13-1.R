@@ -34,12 +34,10 @@ setwd(working_directory)
 
 #### Load required packages ####################################################
 library(vegan)
-librar(raster)
+library(raster)
+library(rgdal)
 
 #### Read table ################################################################
-data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"), 
-                        sep = ",", dec = ".", header = TRUE)
-
 animal_species <- read.table(paste0(in_path, "animal_species2014.csv"), 
                         sep = ",", dec = ".", header = TRUE)
 
@@ -59,7 +57,12 @@ plant_species_agr <- plant_species[,substring_plants=="AGR"]
 #### include ndvi as predictor variable ########################################
 
 ndvi <- raster(paste0(in_path,"NDVI_fogo_landsat.tif"))
-data_2014$ndvi <- extract(ndvi,spatial_data_2014)
+spatial_data_2014$ndvi <- extract(ndvi,spatial_data_2014)
+
+
+#### convert it to a data.frame ################################################
+#Ordination doesn't support shapefile data. 
+data_2014=data.frame(spatial_data_2014)
 
 ### Do the ordination ##########################################################
 
@@ -89,3 +92,4 @@ ordination <- cca(animal_species~ELEV+COVRG+ndvi+NAT+AGR,data=data_2014,
                   subset=which(rowSums(animal_species)>0))
 plot(ordination)
 anova(ordination,by="terms",permu=999)
+
