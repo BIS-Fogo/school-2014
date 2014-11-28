@@ -46,25 +46,25 @@ data_2014$ANIMALS_SQRT <- sqrt(data_2014$ANIMALS)
 
 
 #### Leave one out cross validation ############################################
-predicted_values <- c()
+animals_predicted_loocv <- c()
 observed_values <- c()
 for (i in 1:length(data_2014$ANIMALS)){
   linear_model <- lm(data_2014$ANIMALS_SQRT[-i] ~ data_2014$COVRG_SQRT[-i])
   intercept <- linear_model$coefficients[1]
   slope <- linear_model$coefficients[2]
   animals_predicted <- slope*data_2014$COVRG_SQRT[i] + intercept #y=ax+b
-  predicted_values[i] <- animals_predicted^2
+  animals_predicted_loocv[i] <- animals_predicted^2
   observed_values[i] <- data_2014$ANIMALS[i]
 }
 
 
 #### Calculate Mean prediction Error ###########################################
-prediction_error <- predicted_values - observed_values
+prediction_error <- animals_predicted_loocv - observed_values
 mean(abs(prediction_error),na.rm=T)
 
 
 #### Estimate R squared ########################################################
-linear_model <- lm(predicted_values ~ observed_values)
+linear_model <- lm(animals_predicted_loocv ~ observed_values)
 print(summary(linear_model))
-plot(observed_values, predicted_values)
+plot(observed_values, animals_predicted_loocv)
 regLine(linear_model)

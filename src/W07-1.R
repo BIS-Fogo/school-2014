@@ -36,32 +36,33 @@ data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"),
                         sep = ",", dec = ".", header = TRUE)
 
 
-#### Run linear model and prediction from W05-1 again ##########################
-source(paste0(script_path,"/W05-1.R"))
+#### Run linear model and prediction from W06-1 again ##########################
+source(paste0(script_path,"/W06-1.R"))
 
 
 #### Descriptive statistics ####################################################
-mean(animals_predicted)
+mean(animals_predicted_loocv)
 mean(data_2014$ANIMALS,na.rm = TRUE)
 
-median(animals_predicted)
+median(animals_predicted_loocv)
 median(data_2014$ANIMALS,na.rm = TRUE)
 
-sd(animals_predicted)
+sd(animals_predicted_loocv)
 sd(data_2014$ANIMALS,na.rm = TRUE)
 
-max(animals_predicted)
+max(animals_predicted_loocv)
 max(data_2014$ANIMALS,na.rm = TRUE)
 
-min(animals_predicted)
+min(animals_predicted_loocv)
 min(data_2014$ANIMALS,na.rm = TRUE)
 
 
 #### Plots for descriptive statistics #########################################
-### scatter plot:
-plot(animals_predicted,data_2014$ANIMALS)
-#identify outliers:
-identify(animals_predicted,data_2014$ANIMALS,labels=data_2014$ID)
 ### boxplot:
-boxplot(animals_predicted,data_2014$ANIMALS)
+boxplot(animals_predicted_loocv,data_2014$ANIMALS)
+### scatter plot:
+plot(animals_predicted_loocv,data_2014$ANIMALS)
+#identify outliers:
+identify(animals_predicted_loocv,data_2014$ANIMALS,labels=data_2014$ID)
+
 

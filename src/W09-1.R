@@ -35,26 +35,26 @@ data_2014 <- read.table(paste0(in_path, "fieldSurvey2014_Subset01.csv"),
                         sep = ",", dec = ".", header = TRUE)
 
 
-#### Run linear model and prediction from W05-1 again ##########################
-source("/home/hanna/Documents/Projects/KapVerde/winterSchool/bis-fogo/analysis/W05-1.R")
+#### Run linear model and prediction from W06-1 again ##########################
+source("/home/hanna/Documents/Projects/KapVerde/winterSchool/bis-fogo/analysis/W06-1.R")
 
 
 #### Modify plots ##############################################################
 ### scatter plot:
-plot(animals_predicted,data_2014$ANIMALS)
+plot(animals_predicted_loocv,data_2014$ANIMALS)
 ### change axis names
-plot(animals_predicted,data_2014$ANIMALS,xlab="predicted",ylab="observed")
+plot(animals_predicted_loocv,data_2014$ANIMALS,xlab="predicted",ylab="observed")
 
 ### add a title
-plot(animals_predicted,data_2014$ANIMALS,xlab="predicted",ylab="observed",
+plot(animals_predicted_loocv,data_2014$ANIMALS,xlab="predicted",ylab="observed",
      main="Validation")
 
 ### change the symbols according to http://www.statmethods.net/advgraphs/parameters.html
-plot(animals_predicted,data_2014$ANIMALS,xlab="predicted",ylab="observed",
+plot(animals_predicted_loocv,data_2014$ANIMALS,xlab="predicted",ylab="observed",
      main="Validation",pch=16)
 
 ### change the color
-plot(animals_predicted,data_2014$ANIMALS,xlab="predicted",ylab="observed",
+plot(animals_predicted_loocv,data_2014$ANIMALS,xlab="predicted",ylab="observed",
      main="Validation",pch=16,col="blue")
 
 ### add a legend
@@ -62,3 +62,4 @@ legend("topleft",pch=16,col="blue",legend="data points")
 
 ### add a diagonal line where oberved is equal predicted
 lines(c(0,200),c(0,200))
+
